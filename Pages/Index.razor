@@ -1,0 +1,36 @@
+﻿@page "/"
+@inject IGestioneUtenti servizio
+
+<PageTitle>Index</PageTitle>
+
+<h1>@servizio.Salute(@Name)</h1>
+<button @onclick="OnCancel">Cancella</button>
+@Message
+
+@if(response != null && response.data != null)
+{
+    @foreach (var person in response.data)
+    {
+        <p>@person.FirstName @person.LastName</p>
+        <img src="@person.Avatar"/>
+    }   
+}
+
+
+
+@code {
+    private string Name = "Mario";
+    private ReqResResponse? response;
+    private string? Message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        response = await servizio.GetDataAsync();
+    }
+    void OnCancel()
+    {
+        servizio.Cancel() ;
+        Message = "Richiesta annullata";
+    }
+}
+
