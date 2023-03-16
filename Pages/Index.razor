@@ -5,6 +5,7 @@
 
 <h1>@servizio.Salute(@Name)</h1>
 <button @onclick="OnCancel">Cancella</button>
+<button @onclick="Create">Create</button>
 @Message
 
 @if(response != null && response.data != null)
@@ -31,6 +32,12 @@
     {
         servizio.Cancel() ;
         Message = "Richiesta annullata";
+    }
+
+    async Task Create()
+    {
+        var result = await servizio.Create(new ReqResRequest { Name = "Mario", Job = "Developer" });
+        Message = $"Response: {result}";
     }
 }
 

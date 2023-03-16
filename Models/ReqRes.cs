@@ -2,6 +2,13 @@
 
 namespace DemoBlazorWASM.Models
 {
+    public class ReqResRequest
+    {
+        public string? Name { get; set; }
+        public string? Job { get; set; }
+    }
+
+
     public class ReqResResponse
     {
         public int page { get; set; }

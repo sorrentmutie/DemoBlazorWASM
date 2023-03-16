@@ -7,6 +7,7 @@ public interface IGestioneUtenti
     string Salute(string name);
     Task<ReqResResponse?> GetDataAsync();
     void Cancel();
+    Task<int> Create(ReqResRequest reqRes);
 }
 
 public class GestioneUtenti : IGestioneUtenti
@@ -23,6 +24,19 @@ public class GestioneUtenti : IGestioneUtenti
     public void Cancel()
     {
         cancellationToken.Cancel();
+    }
+
+    public async Task<int> Create(ReqResRequest reqRes)
+    {
+        var httpClient = httpClientFactory.CreateClient("reqres");
+        var response = await httpClient.PostAsJsonAsync("users", reqRes);
+        if(response.IsSuccessStatusCode)
+        {
+            return (int) response.StatusCode;
+        } else
+        {
+            return 500;
+        }
     }
 
     public async Task<ReqResResponse?> GetDataAsync()
